@@ -35,7 +35,40 @@ Training progress and logs and model will all be saved to the working directory 
 $ python makemore.py -i names.txt -o names --sample-only
 ```
 
-This will load the best model so far and print more samples on demand. Have fun.
+This will load the best model so far and print more samples on demand. Here are some unique baby names that get eventually generated from current default settings (test logprob of ~1.92):
+
+```
+dontell
+khylum
+camatena
+aeriline
+najlah
+sherrith
+ryel
+irmi
+taislee
+mortaz
+akarli
+maxfelynn
+biolett
+zendy
+laisa
+halliliana
+goralynn
+brodynn
+romima
+chiyomin
+loghlyn
+melichae
+mahmed
+irot
+helicha
+besdy
+ebokun
+lucianno
+```
+
+Have fun!
 
 ### License
 
