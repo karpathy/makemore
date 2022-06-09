@@ -372,7 +372,7 @@ if __name__ == '__main__':
     parser.add_argument('--work-dir', '-o', type=str, default='out', help="output working directory")
     parser.add_argument('--resume', action='store_true', help="when this flag is used, we will resume optimization from existing model in the workdir")
     parser.add_argument('--num-workers', '-n', type=int, default=1, help="number of data workers for both train/test")
-    parser.add_argument('--device', type=str, default='cpu', help="device to use for compute, e.g. cpu|cuda|m1")
+    parser.add_argument('--device', type=str, default='cpu', help="device to use for compute, e.g. cpu|cuda|mps")
     parser.add_argument('--seed', type=int, default=1337, help="seed")
     # sampling
     parser.add_argument('--sample-only', action='store_true', help="just sample from the model and quit, don't train")
@@ -446,7 +446,7 @@ if __name__ == '__main__':
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         optimizer.step()
-        if args.device != 'cpu':
+        if args.device == 'cuda':
             torch.cuda.synchronize()
         t1 = time.time()
 
