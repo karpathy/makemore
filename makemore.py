@@ -382,7 +382,6 @@ if __name__ == '__main__':
         # calculate the gradient, clip it, update the weights
         model.zero_grad(set_to_none=True)
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         optimizer.step()
         if args.device.startswith('cuda'):
             torch.cuda.synchronize()
