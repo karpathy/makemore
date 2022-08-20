@@ -113,8 +113,6 @@ class GPT(nn.Module):
 
     def __init__(self, config):
         super().__init__()
-        assert config.vocab_size is not None
-        assert config.block_size is not None
         self.block_size = config.block_size
 
         self.transformer = nn.ModuleDict(dict(
