@@ -330,6 +330,7 @@ class RNN(nn.Module):
         for i in range(t):
             xt = emb[:, i, :] # (b, n_embd)
             ht = self.cell(xt, hprev) # (b, n_embd2)
+            hprev = ht
             hiddens.append(ht)
 
         # decode the outputs
