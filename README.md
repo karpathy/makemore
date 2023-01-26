@@ -3,7 +3,7 @@
 
 We use the `makemore` repo by @karpathy to investigate the formation of induction heads in a toy model.
 
-See (notebook)[InductionModel.ipynb].
+See [InductionModel.ipynb](InductionModel.ipynb).
 
 # makemore
 
