@@ -13,7 +13,7 @@ def colorize(words, color_array):
     colored_string = ''
     for word, color in zip(words, color_array):
         color = matplotlib.colors.rgb2hex(cmap(color)[:3])
-        colored_string += template.format(color, '&nbsp' + word + '&nbsp')
+        colored_string += template.format(color, ' ' + word + ' ')
     return HTML(colored_string)
 
 def colorize_list(wordss, color_arrays):
@@ -25,6 +25,6 @@ def colorize_list(wordss, color_arrays):
     for row in range(len(wordss)):
         for word, color in zip(wordss[row], color_arrays[row]):
             color = matplotlib.colors.rgb2hex(cmap(color)[:3])
-            colored_string += template.format(color, '&nbsp' + word + '&nbsp')
+            colored_string += template.format(color, ' ' + word + ' ')
         colored_string += '<br>'
     return HTML(colored_string)
