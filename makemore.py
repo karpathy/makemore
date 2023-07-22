@@ -542,10 +542,10 @@ class CharDataset(Dataset):
         y[len(ix)+1:] = -1 # index -1 will mask the loss at the inactive locations
         return x, y
 
-def create_datasets(input_file):
+def create_datasets(input_file, input_file_encoding : str = None):
 
     # preprocessing of the input text file
-    with open(input_file, 'r') as f:
+    with open(input_file, 'r', encoding=input_file_encoding) as f:
         data = f.read()
     words = data.splitlines()
     words = [w.strip() for w in words] # get rid of any leading or trailing white space
@@ -604,6 +604,7 @@ if __name__ == '__main__':
     parser.add_argument('--max-steps', type=int, default=-1, help="max number of optimization steps to run for, or -1 for infinite.")
     parser.add_argument('--device', type=str, default='cpu', help="device to use for compute, examples: cpu|cuda|cuda:2|mps")
     parser.add_argument('--seed', type=int, default=3407, help="seed")
+    parser.add_argument('--input-file-encoding', type=str, default=None, help='encoding of the input file')
     # sampling
     parser.add_argument('--top-k', type=int, default=-1, help="top-k for sampling, -1 means no top-k")
     # model
@@ -626,7 +627,7 @@ if __name__ == '__main__':
     writer = SummaryWriter(log_dir=args.work_dir)
 
     # init datasets
-    train_dataset, test_dataset = create_datasets(args.input_file)
+    train_dataset, test_dataset = create_datasets(args.input_file, args.input_file_encoding)
     vocab_size = train_dataset.get_vocab_size()
     block_size = train_dataset.get_output_length()
     print(f"dataset determined that: {vocab_size=}, {block_size=}")
