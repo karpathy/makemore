@@ -550,7 +550,7 @@ def create_datasets(input_file):
     words = data.splitlines()
     words = [w.strip() for w in words] # get rid of any leading or trailing white space
     words = [w for w in words if w] # get rid of any empty strings
-    chars = sorted(list(set(''.join(words)))) # all the possible characters
+    chars = sorted(set(''.join(words))) # all the possible characters
     max_word_length = max(len(w) for w in words)
     print(f"number of examples in the dataset: {len(words)}")
     print(f"max word length: {max_word_length}")
