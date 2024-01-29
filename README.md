@@ -15,6 +15,18 @@ Current implementation follows a few key papers:
 - GRU, following [Kyunghyun Cho et al. 2014](https://arxiv.org/abs/1409.1259)
 - Transformer, following [Vaswani et al. 2017](https://arxiv.org/abs/1706.03762)
 
+### Installation
+- Fork the Repo
+- Clone the repo to your computer
+- Install prerequisites
+```bash
+$ pip install torch numpy tensorboard
+```
+- Run the code
+```bash
+$ python makemore.py
+```  
+
 ### Usage
 
 The included `names.txt` dataset, as an example, has the most common 32K names takes from [ssa.gov](https://www.ssa.gov/oact/babynames/) for the year 2018. It looks like:
