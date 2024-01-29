@@ -17,7 +17,8 @@ Current implementation follows a few key papers:
 
 ### Installation
 - Fork the Repo
-- Install Prerequistes
+- Clone the repo to your computer
+- Install prerequisites
 ```bash
 $ pip install torch numpy tensorboard
 ```
