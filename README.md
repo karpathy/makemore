@@ -11,8 +11,15 @@ The point of the series is that nothing is imported as a black box. `nn.Transfor
 │   ├── gpt_dev.ipynb    # step-by-step development notebook
 │   ├── build_GPT.py     # the finished ~10.8M-param GPT
 │   └── input.txt        # tiny Shakespeare, 1.1 MB / ~1.1M characters
-├── names.txt            # 32,032 names — the makemore dataset
-└── makemore/            # makemore series (see status below)
+├── makemore/            # makemore series, parts 1-5, one notebook each
+│   ├── build_makemore_yay_bigram.ipynb
+│   ├── build_makemore_yay_MLP.ipynb
+│   ├── build_makemore_yay_RNN.ipynb
+│   ├── build_makemore_manual_backprop.ipynb
+│   ├── build_makemore_yay_Wavenet.ipynb
+│   ├── makemore.py      # Karpathy's reference implementation
+│   └── names.txt
+└── names.txt            # 32,032 names — the makemore dataset
 ```
 
 ---
@@ -102,11 +109,21 @@ It prints train and validation loss every 500 iterations and samples 500 charact
 
 > Lectures: [makemore part 1](https://www.youtube.com/watch?v=PaCmpygFfXo) through part 5
 
-`names.txt` — 32,032 of the most common US baby names — is the dataset for the earlier half of the series, which arrives at the Transformer from the other direction: bigram counts, then a Bengio-style MLP, then the internals nobody shows you (activation statistics, why initialization scale matters, BatchNorm from scratch, gradients worked out by hand), then a WaveNet-style hierarchical model.
+`names.txt` — 32,032 of the most common US baby names — is the dataset for the earlier half of the series, which arrives at the Transformer from the other direction. Each notebook in [`makemore/`](makemore/) is one lecture, and every one of them ends at roughly the same loss:
 
-**Status: the code isn't in this repo yet.** The `makemore/` entry is registered as a git submodule pointing at commit `988aa59e`, but there's no `.gitmodules` file, so it clones as an empty directory and nothing is fetched. Either commit the notebooks directly or add a proper `.gitmodules` entry — right now the folder is dead weight on the repo page.
+| Notebook | Lecture | What it builds | Result |
+| --- | --- | --- | --- |
+| `build_makemore_yay_bigram.ipynb` | Part 1 | Bigram counts, then the *same* model re-derived as a one-hot input into a single linear layer trained by gradient descent | loss **2.4622** |
+| `build_makemore_yay_MLP.ipynb` | Part 2 | Bengio et al. 2003 MLP — character embeddings, a 3-character context window, minibatching, learning-rate search, and a proper 80/10/10 train/dev/test split | |
+| `build_makemore_yay_RNN.ipynb` | Part 3 | Activations and gradients: hand-rolled `Linear`, `Tanh` and `BatchNorm1d` modules, watching saturation and initialization scale decide whether the net trains at all | train **2.4342** / val **2.4390** |
+| `build_makemore_manual_backprop.ipynb` | Part 4 | Backprop by hand through the entire MLP + BatchNorm — 29 `cmp()` gradient checks against autograd, no `loss.backward()` | |
+| `build_makemore_yay_Wavenet.ipynb` | Part 5 | A WaveNet-style hierarchical model: `FlattenConsecutive` fusing characters in pairs across layers, wrapped in a homemade `Sequential` | train **2.4243** / val **2.4378** |
 
-The dataset is here and ready, so the fix is just pushing the work.
+That flat loss curve across five increasingly sophisticated models is the actual lesson of the series. A count-based bigram table gets **2.4622**; a hierarchical convolutional network with BatchNorm gets **2.4243**. The architecture barely moved the number, because a 3-character context is the binding constraint — which is exactly the problem attention was invented to solve, and why the series ends at a Transformer.
+
+Part 1 re-deriving the count table as a neural net is the pivot the whole series rests on: once you've seen that the trained weights converge to the log-counts, "training a network" stops being magic and becomes something you can predict the answer to.
+
+The folder also carries Karpathy's `makemore.py` and `names.txt` from [karpathy/makemore](https://github.com/karpathy/makemore) for reference, plus an empty `build_GPT.ipynb` placeholder.
 
 ---
 
