@@ -374,7 +374,7 @@ class MLP(nn.Module):
 
     def forward(self, idx, targets=None):
 
-        # gather the word embeddings of the previous 3 words
+        # gather the word embeddings of the previous block_size tokens
         embs = []
         for k in range(self.block_size):
             tok_emb = self.wte(idx) # token embeddings of shape (b, t, n_embd)
